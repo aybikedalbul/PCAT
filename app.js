@@ -1,42 +1,49 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const fileUpload = require('express-fileupload');
+var methodOverride = require('method-override');
+
+const pageController = require('./controllers/pageController');
+const photoController = require('./controllers/photoController');
+
 const path = require('path');
 const ejs = require('ejs');
-const Photo = require('./models/Photo');
 
 const app = express();
 
 // connect DB
-mongoose.connect("mongodb://127.0.0.1:27017/pcat-test-db");
+mongoose.connect('mongodb://127.0.0.1:27017/pcat-test-db');
 
 // Template Engine
 app.set('view engine', 'ejs');
 
 //Middlewares
 app.use(express.static('public')),
-  //Aldığımız requesti sonlandırmamızı sağladı.
   app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(fileUpload());
+app.use(
+  methodOverride('_method', {
+    methods: ['POST', 'GET'],
+  })
+);
 
 // Routes
-app.get('/', async (req, res) => {
-  const photos = await Photo.find({}); //Takes photos from database
-  res.render('index', {
-    photos, //Photos taken from the database are sent to the homepage
-  });
-});
-app.get('/about', (req, res) => {
-  res.render('about');
-});
+app.get('/', photoController.getAllPhotos);
 
-app.get('/add', (req, res) => {
-  res.render('add')
-})
+app.get('/photos/:id', photoController.getPhoto);
 
-app.post('/photos', async (req, res) => {
-  await Photo.create(req.body);
-  res.redirect('/'); // Sends it to the homepage
-});
+app.get('/about', pageController.getAbout);
+
+app.get('/add', pageController.getAdd);
+
+app.post('/photos', photoController.createPhoto);
+
+app.get('/photos/edit/:id', pageController.getEdit);
+
+app.put('/photos/:id', photoController.updatePhoto);
+
+app.delete('/photos/:id', photoController.deletePhoto);
 
 const port = 3001;
 app.listen(port, () => {

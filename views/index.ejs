@@ -7,10 +7,10 @@
             <%- include('partials/_navigation') -%>
 
 
-            <div class="tm-welcome-container text-center text-white">
+            <div class="tm-welcome-container text-center text-white"> 
                 <div class="tm-welcome-container-inner">
-                    <p class="tm-welcome-text mb-1 text-white">Video Catalog is brought to you by TemplateMo.</p>
-                    <p class="tm-welcome-text mb-5 text-white">This is a full-width video banner.</p>
+                    <p class="tm-welcome-text mb-1 text-white">Welcome to my PCAT projects..</p>
+                    <p class="tm-welcome-text mb-5 text-white">Aybike Dalbul</p>
                     <a href="#content" class="btn tm-btn-animate tm-btn-cta tm-icon-down">
                         <span>Discover</span>
                     </a>
@@ -36,8 +36,8 @@
 
                         <div class="col-lg-4 col-md-6 col-sm-12 tm-catalog-item">
                             <div class="position-relative tm-thumbnail-container">
-                                <img src="img/tn-01.jpg" alt="Image" class="img-fluid tm-catalog-item-img">    
-                                <a href="video-page.html" class="position-absolute tm-img-overlay">
+                                <img src="<%= photos[i].image %>" alt="Image" class="img-fluid tm-catalog-item-img">    
+                                <a href="/photos/<%= photos[i]._id %>" class="position-absolute tm-img-overlay">
                                     <i class="fas fa-play tm-overlay-icon"></i>
                                 </a>
                             </div>    
